@@ -18,8 +18,10 @@ import java.sql.SQLException;
 @WebServlet("/api/auth/login")
 public class UserLoginController extends HttpServlet {
 
+
     private UserService service = new UserService();
     private ObjectMapper objectMapper = new ObjectMapper();
+
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
@@ -29,7 +31,6 @@ public class UserLoginController extends HttpServlet {
             e.printStackTrace();
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             response.getWriter().write("Erro na requisição");
-
         }
     }
 
@@ -41,10 +42,16 @@ public class UserLoginController extends HttpServlet {
             BufferedReader reader = request.getReader();
             User data = objectMapper.readValue(reader, User.class);
 
-            service.login(data);
+            boolean isAuthorized = service.login(data.getEmail(), data.getPassword());
 
-            response.setStatus(HttpServletResponse.SC_OK);
-            response.getWriter().write("Login with sucessfully");
+            if (isAuthorized) {
+                response.setStatus(HttpServletResponse.SC_OK);
+                response.getWriter().write("Login successful");
+            } else {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401
+                response.getWriter().write("Invalid email or password");
+            }
+
         } catch(Exception e){
             e.printStackTrace();
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);

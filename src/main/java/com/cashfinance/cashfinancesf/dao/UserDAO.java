@@ -3,12 +3,16 @@ package com.cashfinance.cashfinancesf.dao;
 import com.cashfinance.cashfinancesf.model.User;
 import infra.db.ConnectionFactory;
 
+import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserDAO {
+    SecureRandom random = new SecureRandom();
+    byte[] salt = new byte[16];
+
 
     public void registerUser(User user) throws SQLException {
         String sql = "INSERT INTO tb_users(name, email, phone, password, profileType) VALUES (?,?,?,?,?)";
@@ -29,25 +33,27 @@ public class UserDAO {
        }
     }
 
-    public void loginUser(User user) throws SQLException{
+    public User loginUser(String email) throws SQLException{
         String sql = "SELECT email, password FROM tb_users WHERE email = ?";
 
         try(
                 Connection conn = ConnectionFactory.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql);
                 ){
-            stmt.setString(1, user.getEmail());
-
+            stmt.setString(1, email);
 
             ResultSet result = stmt.executeQuery();
 
             if(result.next()){
-                System.out.println("Logado com sucesso");
-            }else{
-                System.out.println("Não tem user no banco");
+                User dados = new User();
+                dados.setEmail(result.getString("email"));
+                dados.setPassword(result.getString("password"));
+                return dados;
             }
+
         }
 
+        return null;
     }
 
 }

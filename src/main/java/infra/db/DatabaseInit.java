@@ -23,11 +23,13 @@ public class DatabaseInit {
         try (Connection conn = ConnectionFactory.getConnection();
              Statement stmt = conn.createStatement()) {
 
+
+
             // here i doing a select query to view the users
-            try (ResultSet rs = stmt.executeQuery("SELECT id, name, email, profileType FROM tb_users")) {
+            try (ResultSet rs = stmt.executeQuery("SELECT id, name, email, password,  profileType FROM tb_users")) {
                 while (rs.next()) {
                     System.out.println(
-                            rs.getInt("id") + rs.getString("name") + " | " + rs.getString("email") + " | " + rs.getString("profileType")
+                            rs.getInt("id") + rs.getString("name") + " | " + rs.getString("email") + " | " + rs.getString("password") + " | " + rs.getString("profileType")
                     );
                 }
             }
