@@ -1,18 +1,17 @@
 package com.cashfinance.cashfinancesf.dao;
 
-
 import com.cashfinance.cashfinancesf.model.User;
 import infra.db.ConnectionFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserDAO {
 
     public void registerUser(User user) throws SQLException {
         String sql = "INSERT INTO tb_users(name, email, phone, password, profileType) VALUES (?,?,?,?,?)";
-
        try(
                Connection conn = ConnectionFactory.getConnection();
                PreparedStatement stmt = conn.prepareStatement(sql);
@@ -31,8 +30,23 @@ public class UserDAO {
     }
 
     public void loginUser(User user) throws SQLException{
+        String sql = "SELECT email, password FROM tb_users WHERE email = ?";
+
+        try(
+                Connection conn = ConnectionFactory.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                ){
+            stmt.setString(1, user.getEmail());
 
 
+            ResultSet result = stmt.executeQuery();
+
+            if(result.next()){
+                System.out.println("Logado com sucesso");
+            }else{
+                System.out.println("Não tem user no banco");
+            }
+        }
 
     }
 

@@ -12,6 +12,11 @@ public class User {
 
     }
 
+    public User(String email){
+        this.setEmail(email);
+
+    }
+
     // constructor to do register
     public User(String name, String email, String phone, String password, String type){
         this.setName(name);

@@ -2,6 +2,7 @@ package com.cashfinance.cashfinancesf.controller;
 
 import com.cashfinance.cashfinancesf.dao.UserDAO;
 import com.cashfinance.cashfinancesf.model.User;
+import com.cashfinance.cashfinancesf.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.ServletException;
@@ -13,10 +14,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.SQLException;
 
+
 @WebServlet("/api/auth/register")
 public class UserRegisterController extends HttpServlet {
 
-    private UserDAO dao = new UserDAO();
+    private UserService service = new UserService();
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
@@ -48,7 +50,7 @@ public class UserRegisterController extends HttpServlet {
 
             // object data with objectMapper for transform in json too
 
-            dao.registerUser(data); // call method register user
+            service.register(data);// call method register user
 
             // status code.
             response.setStatus(HttpServletResponse.SC_CREATED);
@@ -57,7 +59,7 @@ public class UserRegisterController extends HttpServlet {
         } catch(Exception e){
             e.printStackTrace();
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            response.getWriter().write("Error");
+            response.getWriter().write("Error for create");
         }
 
 

@@ -15,7 +15,7 @@ public class DatabaseInit {
                 phone TEXT,
                 password TEXT,
                 profileType TEXT CHECK (
-                    profileType IN ('Conservative', 'Moderate', 'Dangerous')
+                profileType IN ('Conservative', 'Moderate', 'Dangerous')
                 )
             );
             """
@@ -23,7 +23,7 @@ public class DatabaseInit {
         try (Connection conn = ConnectionFactory.getConnection();
              Statement stmt = conn.createStatement()) {
 
-            // read users
+            // here i doing a select query to view the users
             try (ResultSet rs = stmt.executeQuery("SELECT id, name, email, profileType FROM tb_users")) {
                 while (rs.next()) {
                     System.out.println(

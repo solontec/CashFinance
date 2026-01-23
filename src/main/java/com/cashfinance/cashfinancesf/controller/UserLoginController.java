@@ -1,7 +1,8 @@
 package com.cashfinance.cashfinancesf.controller;
 
-import com.cashfinance.cashfinancesf.dao.UserDAO;
+
 import com.cashfinance.cashfinancesf.model.User;
+import com.cashfinance.cashfinancesf.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.ServletException;
@@ -13,18 +14,22 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("api/auth/login")
+
+@WebServlet("/api/auth/login")
 public class UserLoginController extends HttpServlet {
-    private UserDAO dao = new UserDAO();
+
+    private UserService service = new UserService();
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         try{
             login(request, response);
-        }catch(Exception e){
+        }catch (Exception e){
+            e.printStackTrace();
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            response.getWriter().write("Erro na requisicao");
+            response.getWriter().write("Erro na requisição");
+
         }
     }
 
@@ -36,14 +41,15 @@ public class UserLoginController extends HttpServlet {
             BufferedReader reader = request.getReader();
             User data = objectMapper.readValue(reader, User.class);
 
-            dao.loginUser(data);
-            response.setStatus(HttpServletResponse.SC_ACCEPTED);
-            response.getWriter().write("Login with sucess");
-        }catch(Exception e){
+            service.login(data);
+
+            response.setStatus(HttpServletResponse.SC_OK);
+            response.getWriter().write("Login with sucessfully");
+        } catch(Exception e){
             e.printStackTrace();
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            response.getWriter().write("error");
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().write("bad request");
+
         }
     }
-
 }
