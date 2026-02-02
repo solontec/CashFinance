@@ -5,6 +5,7 @@ import com.cashfinance.cashfinancesf.model.User;
 import com.cashfinance.cashfinancesf.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,10 +15,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.SQLException;
 
-
 @WebServlet("/api/auth/login")
 public class UserLoginController extends HttpServlet {
-
 
     private UserService service = new UserService();
     private ObjectMapper objectMapper = new ObjectMapper();
@@ -33,6 +32,7 @@ public class UserLoginController extends HttpServlet {
             response.getWriter().write("Erro na requisição");
         }
     }
+
 
     public void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         response.setContentType("application/json");

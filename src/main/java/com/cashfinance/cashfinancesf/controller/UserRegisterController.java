@@ -34,6 +34,7 @@ public class UserRegisterController extends HttpServlet {
         }
     }
 
+        
     public void register(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
 

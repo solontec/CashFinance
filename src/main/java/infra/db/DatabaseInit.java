@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.ResultSet;
 
+
 public class DatabaseInit {
     public static void init() {
 
@@ -22,8 +23,6 @@ public class DatabaseInit {
         ;
         try (Connection conn = ConnectionFactory.getConnection();
              Statement stmt = conn.createStatement()) {
-
-
 
             // here i doing a select query to view the users
             try (ResultSet rs = stmt.executeQuery("SELECT id, name, email, password,  profileType FROM tb_users")) {

@@ -36,7 +36,6 @@ public class UserService {
 
         // set password, before the value is withou hash, now with hash (passwordHash que tem o hash agora é a senha)
         // set.!
-
         user.setPassword(passwordHash);
         dao.registerUser(user);
     }
@@ -64,7 +63,6 @@ public class UserService {
             System.out.println("Password incorrect");
             return false;
         }
-
 
     }
 
