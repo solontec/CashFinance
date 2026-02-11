@@ -66,4 +66,16 @@ public class UserService {
 
     }
 
+    public void delete(User user){
+        if(user.getEmail().isEmpty() || user.getEmail() == null){
+            throw new IllegalArgumentException("Email is required");
+        }
+
+        if(user.getPassword().isEmpty() || user.getPassword() == null){
+            throw new IllegalArgumentException("Password is required");
+        }
+
+
+    }
+
 }
