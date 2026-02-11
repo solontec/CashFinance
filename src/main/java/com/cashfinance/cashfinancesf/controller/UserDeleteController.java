@@ -19,18 +19,6 @@ public class UserDeleteController {
     private UserService userService;
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    @Override
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-
-        try(
-                delete(request, response);
-                ){
-            e.printStackTrace();
-            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
-            response.getWriter().println("Deleted Successfully");
-        }
-    }
-
     public void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
