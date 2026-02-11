@@ -56,4 +56,26 @@ public class UserDAO {
         return null;
     }
 
+    public void deleteUser(User user){
+        String sql = "DELETE FROM tb_users WHERE email = ?";
+
+        try(
+                Connection conn = ConnectionFactory.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);
+
+        ){
+            stmt.setString(1, user.getEmail());
+
+            ResultSet result = stmt.executeQuery();
+
+            if(result.next()){
+                User dados = new User();
+                dados.setEmail(user.getEmail());
+                return dados
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
